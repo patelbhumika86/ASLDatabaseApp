@@ -15,7 +15,7 @@ import org.postgresql.core.BaseConnection;
 public class DBInteraction {
 	static String file = GenerateCSV.outputFileName;
 
-	private static Connection connectToDB() throws ClassNotFoundException, SQLException {
+	static Connection connectToDB() throws ClassNotFoundException, SQLException {
 		String dbURL = "jdbc:postgresql://localhost:5432/asl";
 		String user = "postgres";
 		String password = "password";

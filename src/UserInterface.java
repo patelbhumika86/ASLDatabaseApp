@@ -35,8 +35,7 @@ public class UserInterface implements ActionListener {
 
 	private JTextField textfieldFilePath;
 
-	private JTextField textfieldLLBX;// lower left bottom corner of the box as a
-	// Point object
+	private JTextField textfieldLLBX;// lower left bottom corner of the box as a Point object
 	private JTextField textfieldLLBY;
 	private JTextField textfieldLLBZ;
 	private JTextField textfieldURTX;
@@ -219,7 +218,7 @@ public class UserInterface implements ActionListener {
 				q.findIntersectingObjs(inputBoundingBox);
 				long endTime = (System.nanoTime() - startTime) / 1000000;
 				lblQueryTime.setText("Time taken = " + endTime + " millisecs");
-				lblQueryOutput.setText("Intersecting objects are stored in file-" + q.queryOutputFile);
+				lblQueryOutput.setText("Intersecting objects are stored in file-" + SpatialQuery.queryOutputFile);
 			} catch (NumberFormatException ignore) {
 				lblQueryOutput.setText("Invalid Input - please enter valid values for bounding box");
 			} catch (ClassNotFoundException e1) {
