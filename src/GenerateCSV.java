@@ -70,10 +70,8 @@ public class GenerateCSV {
 				PrintWriter out = new PrintWriter(bw)) {
 		out.println(string);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 	
-
 }

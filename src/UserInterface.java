@@ -12,11 +12,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.JOptionPane;
 
 import org.postgis.PGbox3d;
 import org.postgis.Point;
 
 import javax.swing.JSeparator;
+import java.awt.Font;
 
 public class UserInterface implements ActionListener {
 	long noOfObjsInserted = 0;
@@ -41,42 +43,43 @@ public class UserInterface implements ActionListener {
 	private JTextField textfieldURTX;
 	private JTextField textfieldURTY;
 	private JTextField textfieldURTZ;
+	private final JButton btnTutorial = new JButton("Tutorial");
 
 	UserInterface() {
 		JFrame f = new JFrame("Database Interface");
 		// submit button
 		btnSaveObjects = new JButton("Save Objects");
-		btnSaveObjects.setBounds(297, 88, 140, 40);
+		btnSaveObjects.setBounds(208, 144, 140, 40);
 		// enter name label
 		lblFilePath = new JLabel();
 		lblFilePath.setText("Enter file path :");
-		lblFilePath.setBounds(20, 47, 100, 40);
+		lblFilePath.setBounds(36, 102, 100, 30);
 		// empty label which will show event after button clicked
 		lblSaveDeleteOutput = new JLabel();
-		lblSaveDeleteOutput.setBounds(155, 131, 450, 40);
+		lblSaveDeleteOutput.setBounds(161, 185, 450, 30);
 		// textfield to enter name
 		textfieldFilePath = new JTextField();
 		textfieldFilePath.setText("/Users/bhumi/Documents/Capstone/testFiles/MyMeshes0352.txt");
-		textfieldFilePath.setBounds(155, 57, 450, 30);
+		textfieldFilePath.setBounds(161, 102, 508, 30);
 
 		// for query
 		btnFindIntersectingObjects = new JButton("Find Intersecting Objects");
-		btnFindIntersectingObjects.setBounds(222, 387, 236, 40);
+		btnFindIntersectingObjects.setBounds(228, 426, 236, 40);
 		// enter name label
 		lblQueryLLB = new JLabel();
 		lblQueryLLB.setText("Enter Lower Left Bottom of BB :");
-		lblQueryLLB.setBounds(20, 273, 207, 48);
+		lblQueryLLB.setBounds(26, 312, 195, 48);
 
 		lblQueryURT = new JLabel();
 		lblQueryURT.setText("Enter Upper Right Top of BB :");
-		lblQueryURT.setBounds(20, 326, 200, 40);
+		lblQueryURT.setBounds(26, 365, 195, 40);
 
 		// empty label which will show event after button clicked
 		lblQueryOutput = new JLabel();
-		lblQueryOutput.setBounds(108, 439, 727, 32);
+		lblQueryOutput.setBounds(61, 478, 673, 32);
 		// textfield to enter name
 		textfieldLLBX = new JTextField();
-		textfieldLLBX.setBounds(222, 283, 71, 30);
+		textfieldLLBX.setBounds(228, 322, 71, 30);
 
 		// add to frame
 		f.getContentPane().add(lblSaveDeleteOutput);
@@ -93,56 +96,61 @@ public class UserInterface implements ActionListener {
 		f.getContentPane().setLayout(null);
 
 		JSeparator separator = new JSeparator();
-		separator.setBounds(0, 183, 792, 12);
+		separator.setBounds(6, 227, 792, 12);
 		f.getContentPane().add(separator);
 
 		textfieldLLBY = new JTextField();
-		textfieldLLBY.setBounds(305, 283, 71, 30);
+		textfieldLLBY.setBounds(311, 322, 71, 30);
 		f.getContentPane().add(textfieldLLBY);
 
 		textfieldLLBZ = new JTextField();
-		textfieldLLBZ.setBounds(388, 285, 71, 30);
+		textfieldLLBZ.setBounds(394, 324, 71, 30);
 		f.getContentPane().add(textfieldLLBZ);
 
 		JLabel lblX = new JLabel("X");
-		lblX.setBounds(245, 255, 24, 16);
+		lblX.setBounds(245, 306, 24, 16);
 		f.getContentPane().add(lblX);
 
 		JLabel lblY = new JLabel("Y");
-		lblY.setBounds(333, 255, 32, 16);
+		lblY.setBounds(339, 306, 32, 16);
 		f.getContentPane().add(lblY);
 
 		JLabel lblZ = new JLabel("Z");
-		lblZ.setBounds(420, 257, 32, 16);
+		lblZ.setBounds(426, 306, 32, 16);
 		f.getContentPane().add(lblZ);
 
 		textfieldURTX = new JTextField();
-		textfieldURTX.setBounds(225, 333, 71, 30);
+		textfieldURTX.setBounds(228, 372, 74, 30);
 		f.getContentPane().add(textfieldURTX);
 
 		textfieldURTY = new JTextField();
-		textfieldURTY.setBounds(308, 333, 71, 30);
+		textfieldURTY.setBounds(311, 372, 71, 30);
 		f.getContentPane().add(textfieldURTY);
 
 		textfieldURTZ = new JTextField();
-		textfieldURTZ.setBounds(391, 333, 71, 30);
+		textfieldURTZ.setBounds(394, 372, 71, 30);
 		f.getContentPane().add(textfieldURTZ);
 
-		JLabel lblNewLabel = new JLabel("Find Intersecting Objects");
-		lblNewLabel.setBounds(20, 207, 261, 16);
+		JLabel lblNewLabel = new JLabel("Find Intersecting Objects with Bounding Box");
+		lblNewLabel.setFont(new Font("Lucida Grande", Font.BOLD, 16));
+		lblNewLabel.setBounds(32, 266, 414, 34);
 		f.getContentPane().add(lblNewLabel);
 
-		JLabel lblNewLabel_1 = new JLabel("Store Objects into the Database");
-		lblNewLabel_1.setBounds(20, 6, 290, 16);
+		JLabel lblNewLabel_1 = new JLabel("Store/ Delete Objects");
+		lblNewLabel_1.setFont(new Font("Lucida Grande", Font.BOLD, 16));
+		lblNewLabel_1.setBounds(26, 51, 290, 29);
 		f.getContentPane().add(lblNewLabel_1);
 
 		btnDeleteObjects = new JButton("Delete Objects");
-		btnDeleteObjects.setBounds(465, 88, 140, 40);
+		btnDeleteObjects.setBounds(426, 144, 140, 40);
 		f.getContentPane().add(btnDeleteObjects);
 
 		lblQueryTime = new JLabel();
-		lblQueryTime.setBounds(108, 484, 727, 32);
+		lblQueryTime.setBounds(61, 523, 673, 32);
 		f.getContentPane().add(lblQueryTime);
+		btnTutorial.setFont(new Font("Lucida Grande", Font.BOLD, 13));
+		btnTutorial.setBounds(664, 6, 117, 29);
+		f.getContentPane().add(btnTutorial);
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -150,19 +158,25 @@ public class UserInterface implements ActionListener {
 		btnSaveObjects.addActionListener(this);
 		btnDeleteObjects.addActionListener(this);
 		btnFindIntersectingObjects.addActionListener(this);
+		btnTutorial.addActionListener(this);
+		
+		
 
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		inputFilePath = textfieldFilePath.getText();
-		
-		if (e.getSource().equals(btnSaveObjects)) {
+		if (e.getSource().equals(btnTutorial)) {
+			String tutorialMessage = "User can perform 3 operations\n"+"1. Save - Enter the location of input file, and press" ;
+			JOptionPane.showMessageDialog(null, tutorialMessage, "InfoBox: " + "Tutorial", JOptionPane.INFORMATION_MESSAGE);
+		}	
+		else if (e.getSource().equals(btnSaveObjects)) {
 			if (inputFilePath.isEmpty() || inputFilePath.length() == 0) {
 				lblSaveDeleteOutput.setText("Please enter a file path for the input file of objects to be stored");
 			} else {
 				try {
-					generateTempOPFile(inputFilePath,true);
+					Preporcessing.generateTempOPFile(inputFilePath,true);
 				} catch (IOException e2) {
 					lblSaveDeleteOutput.setText("Error: Problem occured during object conversion to TIN");
 					System.err.println(e2.getMessage());
@@ -183,7 +197,7 @@ public class UserInterface implements ActionListener {
 				lblSaveDeleteOutput.setText("Please enter a file path for the input file of objects to be deleted");
 			} else {
 				try {
-					generateTempOPFile(inputFilePath, false);
+					Preporcessing.generateTempOPFile(inputFilePath, false);
 				} catch (IOException e2) {
 					lblSaveDeleteOutput.setText("Error: Problem occured during object conversion to TIN");
 					System.err.println(e2.getMessage());
@@ -228,44 +242,44 @@ public class UserInterface implements ActionListener {
 		}
 	}
 
-	private void generateTempOPFile(String filePath, boolean addTerminationChar) throws IOException {
-		Preporcessing obj = new Preporcessing();
-		File file = new File(filePath);
-		BufferedReader br = null;
-		try {
-			br = new BufferedReader(new FileReader(file));
-		} catch (FileNotFoundException e1) {
-			lblSaveDeleteOutput.setText("Path or File not valid");
-		}
-		
-		GenerateCSV.deleteOldFile();
-		String st = new String();
-		StringBuffer metadata = new StringBuffer();
-		try {
-			while ((st = br.readLine()) != null) {
-				if (st.length() != 0 && st.charAt(0) == 'v') {
-					obj.storeCoordinates(st);
-				} else if (st.length() != 0 && st.charAt(0) == 'f') {
-					obj.mapVertexToCoord(st);
-				} else if (st.length() != 0 && st.charAt(0) == 'o') {
-					GenerateCSV.writeFile(metadata);
-					obj.coordinateList = new ArrayList<String>();
-					metadata = new StringBuffer();
-				}
-				metadata.append(st + "\\n");
-			}
-		} catch (IOException e1) {
-			lblSaveDeleteOutput.setText("Path or File not valid");
-		}
-		// write last record
-		GenerateCSV.writeFile(metadata);
-		if(addTerminationChar){
-			GenerateCSV.addFileTermination("\\.");
-		}
-		
-		br.close();
-		return;
-	}
+//	private void generateTempOPFile(String filePath, boolean addTerminationChar) throws IOException {
+//		Preporcessing obj = new Preporcessing();
+//		File file = new File(filePath);
+//		BufferedReader br = null;
+//		try {
+//			br = new BufferedReader(new FileReader(file));
+//		} catch (FileNotFoundException e1) {
+//			lblSaveDeleteOutput.setText("Path or File not valid");
+//		}
+//		
+//		GenerateCSV.deleteOldFile();
+//		String st = new String();
+//		StringBuffer metadata = new StringBuffer();
+//		try {
+//			while ((st = br.readLine()) != null) {
+//				if (st.length() != 0 && st.charAt(0) == 'v') {
+//					obj.storeCoordinates(st);
+//				} else if (st.length() != 0 && st.charAt(0) == 'f') {
+//					obj.mapVertexToCoord(st);
+//				} else if (st.length() != 0 && st.charAt(0) == 'o') {
+//					GenerateCSV.writeFile(metadata);
+//					obj.coordinateList = new ArrayList<String>();
+//					metadata = new StringBuffer();
+//				}
+//				metadata.append(st + "\\n");
+//			}
+//		} catch (IOException e1) {
+//			lblSaveDeleteOutput.setText("Path or File not valid");
+//		}
+//		// write last record
+//		GenerateCSV.writeFile(metadata);
+//		if(addTerminationChar){
+//			GenerateCSV.addFileTermination("\\.");
+//		}
+//		
+//		br.close();
+//		return;
+//	}
 
 	public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {

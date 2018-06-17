@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -6,7 +10,7 @@ public class Preporcessing {
 
 	ArrayList<String> coordinateList; // = new ArrayList<String>();
 
-	public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException {
+//	public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException {
 //		Preporcessing obj = new Preporcessing();
 
 ////		String fileName = "/Users/bhumi/Documents/Capstone/Testfiles/" + "GradCouch3Mesh.txt";
@@ -29,8 +33,46 @@ public class Preporcessing {
 //		GenerateCSV.addFileTermination("\\.");
 //		WriteToDB.writeToTable();
 //		br.close();
-	}
+//	}
 
+	static void generateTempOPFile(String filePath, boolean addTerminationChar) throws IOException {
+		Preporcessing obj = new Preporcessing();
+		File file = new File(filePath);
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new FileReader(file));
+		} catch (FileNotFoundException e1) {
+//			lblSaveDeleteOutput.setText("Path or File not valid");
+		}
+		
+		GenerateCSV.deleteOldFile();
+		String st = new String();
+		StringBuffer metadata = new StringBuffer();
+		try {
+			while ((st = br.readLine()) != null) {
+				if (st.length() != 0 && st.charAt(0) == 'v') {
+					obj.storeCoordinates(st);
+				} else if (st.length() != 0 && st.charAt(0) == 'f') {
+					obj.mapVertexToCoord(st);
+				} else if (st.length() != 0 && st.charAt(0) == 'o') {
+					GenerateCSV.writeFile(metadata);
+					obj.coordinateList = new ArrayList<String>();
+					metadata = new StringBuffer();
+				}
+				metadata.append(st + "\\n");
+			}
+		} catch (IOException e1) {
+//			lblSaveDeleteOutput.setText("Path or File not valid");
+		}
+		// write last record
+		GenerateCSV.writeFile(metadata);
+		if(addTerminationChar){
+			GenerateCSV.addFileTermination("\\.");
+		}
+		
+		br.close();
+		return;
+	}
 	void mapVertexToCoord(String st) {
 
 		String s = st.substring(2);// ignore f
