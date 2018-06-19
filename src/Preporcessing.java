@@ -3,39 +3,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Preporcessing {
 
-	ArrayList<String> coordinateList; // = new ArrayList<String>();
+	ArrayList<String> coordinateList;
 
-//	public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException {
-//		Preporcessing obj = new Preporcessing();
-
-////		String fileName = "/Users/bhumi/Documents/Capstone/Testfiles/" + "GradCouch3Mesh.txt";
-//		File file = new File(fileName);
-//		BufferedReader br = new BufferedReader(new FileReader(file));
-//
-//		String st = new String();
-//		while ((st = br.readLine()) != null) {
-//			if (st.length() != 0 && st.charAt(0) == 'v') {
-//				obj.storeCoordinates(st);
-//			} else if (st.length() != 0 && st.charAt(0) == 'f') {
-//				obj.mapVertexToCoord(st);
-//			} else if (st.length() != 0 && st.charAt(0) == 'o') {
-//				GenerateCSV.writeFile();
-//				obj.coordinateList = new ArrayList<String>();
-//			}
-//		}
-//		// write last record
-//		GenerateCSV.writeFile();
-//		GenerateCSV.addFileTermination("\\.");
-//		WriteToDB.writeToTable();
-//		br.close();
-//	}
-
-	static void generateTempOPFile(String filePath, boolean addTerminationChar) throws IOException {
+	static void generateTINFile(String filePath, boolean addTerminationChar) throws IOException {
 		Preporcessing obj = new Preporcessing();
 		File file = new File(filePath);
 		BufferedReader br = null;

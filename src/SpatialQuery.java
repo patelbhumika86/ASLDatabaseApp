@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import org.postgis.PGbox3d;
 
 public class SpatialQuery {
-	public static String queryOutputFile = "/Users/bhumi/Documents/Capstone/Testfiles/" + "output.txt";
+	public static String queryOutputFile = "/Users/bhumi/Documents/Capstone/inputFiles/" + "outputObjects.txt";
 	String dbURL = "jdbc:postgresql://localhost:5432/asl";
 	String user = "postgres";
 	String password = "password";
@@ -32,7 +32,7 @@ public class SpatialQuery {
 
 	public void findIntersectingObjs(PGbox3d inputbox) throws ClassNotFoundException {
 		deleteOldFile();
-		String SQL = "SELECT id-1 id, metadata FROM submeshes WHERE geom &&& ?";
+		String SQL = "SELECT id-1 id, metadata FROM tintable WHERE geom &&& ?";
 		try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(SQL)) {
 			pstmt.setObject(1, inputbox);
 			ResultSet rs = pstmt.executeQuery();
@@ -47,9 +47,10 @@ public class SpatialQuery {
 		try (FileWriter fw = new FileWriter(queryOutputFile, true);
 				BufferedWriter bw = new BufferedWriter(fw);
 				PrintWriter out = new PrintWriter(bw)) {
+			
 			while (rs.next()) {
 				out.println(rs.getString("metadata"));
-				// System.out.println(rs.getString("id"));
+				 System.out.println(rs.getString("id"));
 			}
 
 		} catch (IOException e) {

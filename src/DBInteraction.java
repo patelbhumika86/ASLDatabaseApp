@@ -30,7 +30,7 @@ public class DBInteraction {
 		Connection con = connectToDB();
 
 		CopyManager copyManager = new CopyManager((BaseConnection) con);
-		String bulkInsertQuery = "COPY submeshes(geom,metadata) FROM STDIN WITH(DELIMITER '|')";
+		String bulkInsertQuery = "COPY tintable(geom,metadata) FROM STDIN WITH(DELIMITER '|')";
 
 		File fileDir = new File(DBInteraction.file);
 		Reader in = new BufferedReader(new InputStreamReader(new FileInputStream(fileDir), "UTF-8"));
@@ -53,7 +53,7 @@ public class DBInteraction {
 		BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(fileDir), "UTF-8"));
 
 		while ((geom = in.readLine()) != null) {
-			String deleteQuery = "DELETE FROM submeshes WHERE geom='" + geom + "'";
+			String deleteQuery = "DELETE FROM tintable WHERE geom='" + geom + "'";
 			objsDeleted += stmt.executeUpdate(deleteQuery);
 			geom = "";
 		}

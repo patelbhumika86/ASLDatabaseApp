@@ -1,24 +1,18 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JSeparator;
+import java.awt.Font;
 
 import org.postgis.PGbox3d;
 import org.postgis.Point;
-
-import javax.swing.JSeparator;
-import java.awt.Font;
 
 public class UserInterface implements ActionListener {
 	long noOfObjsInserted = 0;
@@ -61,7 +55,7 @@ public class UserInterface implements ActionListener {
 		lblSaveDeleteOutput.setBounds(50, 183, 450, 30);
 		// textfield to enter name
 		textfieldFilePath = new JTextField();
-		textfieldFilePath.setText("/Users/bhumi/Documents/Capstone/testFiles/MyMeshes0352.txt");
+		textfieldFilePath.setText("/Users/bhumi/Documents/Capstone/inputFiles/MyMeshes_1232.txt");
 		textfieldFilePath.setBounds(161, 102, 508, 30);
 
 		// for query
@@ -81,6 +75,7 @@ public class UserInterface implements ActionListener {
 		lblQueryOutput.setBounds(50, 478, 673, 32);
 		// textfield to enter name
 		textfieldLLBX = new JTextField();
+		textfieldLLBX.setText("1");
 		textfieldLLBX.setBounds(228, 322, 71, 30);
 
 		// add to frame
@@ -102,10 +97,12 @@ public class UserInterface implements ActionListener {
 		f.getContentPane().add(separator);
 
 		textfieldLLBY = new JTextField();
+		textfieldLLBY.setText("2");
 		textfieldLLBY.setBounds(311, 322, 71, 30);
 		f.getContentPane().add(textfieldLLBY);
 
 		textfieldLLBZ = new JTextField();
+		textfieldLLBZ.setText("3");
 		textfieldLLBZ.setBounds(394, 322, 71, 30);
 		f.getContentPane().add(textfieldLLBZ);
 
@@ -122,14 +119,17 @@ public class UserInterface implements ActionListener {
 		f.getContentPane().add(lblZ);
 
 		textfieldURTX = new JTextField();
+		textfieldURTX.setText("7");
 		textfieldURTX.setBounds(228, 372, 74, 30);
 		f.getContentPane().add(textfieldURTX);
 
 		textfieldURTY = new JTextField();
+		textfieldURTY.setText("8");
 		textfieldURTY.setBounds(311, 372, 71, 30);
 		f.getContentPane().add(textfieldURTY);
 
 		textfieldURTZ = new JTextField();
+		textfieldURTZ.setText("9");
 		textfieldURTZ.setBounds(394, 372, 71, 30);
 		f.getContentPane().add(textfieldURTZ);
 
@@ -184,7 +184,7 @@ public class UserInterface implements ActionListener {
 			} else {
 				long startTime = System.nanoTime();
 				try {
-					Preporcessing.generateTempOPFile(inputFilePath, true);
+					Preporcessing.generateTINFile(inputFilePath, true);
 				} catch (IOException e2) {
 					lblSaveDeleteOutput.setText("Error: Problem occured during object conversion to TIN");
 					System.err.println(e2.getMessage());
@@ -207,7 +207,7 @@ public class UserInterface implements ActionListener {
 			} else {
 				long startTime = System.nanoTime();
 				try {
-					Preporcessing.generateTempOPFile(inputFilePath, false);
+					Preporcessing.generateTINFile(inputFilePath, false);
 				} catch (IOException e2) {
 					lblSaveDeleteOutput.setText("Error: Problem occured during object conversion to TIN");
 					System.err.println(e2.getMessage());
