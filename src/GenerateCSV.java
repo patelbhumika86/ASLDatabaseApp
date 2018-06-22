@@ -51,7 +51,6 @@ public class GenerateCSV {
 			}
 		}
 	}
-
 	
 	public static void logError(String invalidTriangle) {
 		try (FileWriter fw = new FileWriter(ErrorLog, true);

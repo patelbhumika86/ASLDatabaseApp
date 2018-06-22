@@ -43,17 +43,17 @@ public class UserInterface implements ActionListener {
 
 	UserInterface() {
 		JFrame f = new JFrame("Database Interface");
-		// submit button
+		
 		btnSaveObjects = new JButton("Save Objects");
 		btnSaveObjects.setBounds(208, 144, 140, 40);
 		
 		lblFilePath = new JLabel();
 		lblFilePath.setText("Enter file path :");
 		lblFilePath.setBounds(36, 102, 100, 30);
-		// empty label which will show event after button clicked
+		
 		lblSaveDeleteOutput = new JLabel();
 		lblSaveDeleteOutput.setBounds(50, 183, 450, 30);
-		// textfield to enter name
+		
 		textfieldFilePath = new JTextField();
 		textfieldFilePath.setText("/Users/bhumi/Documents/Capstone/inputFiles/MyMeshes_1232.txt");
 		textfieldFilePath.setBounds(161, 102, 508, 30);
@@ -61,7 +61,7 @@ public class UserInterface implements ActionListener {
 		// for query
 		btnFindIntersectingObjects = new JButton("Find Intersecting Objects");
 		btnFindIntersectingObjects.setBounds(268, 426, 236, 40);
-		// enter name label
+		
 		lblQueryLLB = new JLabel();
 		lblQueryLLB.setText("Enter Lower Left Bottom of BB :");
 		lblQueryLLB.setBounds(36, 312, 195, 48);
@@ -73,7 +73,7 @@ public class UserInterface implements ActionListener {
 		// empty label which will show event after button clicked
 		lblQueryOutput = new JLabel();
 		lblQueryOutput.setBounds(50, 478, 673, 32);
-		// textfield to enter name
+		
 		textfieldLLBX = new JTextField();
 		textfieldLLBX.setText("1");
 		textfieldLLBX.setBounds(228, 322, 71, 30);

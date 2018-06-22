@@ -16,7 +16,7 @@ public class Preporcessing {
 		try {
 			br = new BufferedReader(new FileReader(file));
 		} catch (FileNotFoundException e1) {
-//			lblSaveDeleteOutput.setText("Path or File not valid");
+			System.out.println(e1.getMessage());
 		}
 		
 		GenerateCSV.deleteOldFile();
@@ -36,7 +36,7 @@ public class Preporcessing {
 				metadata.append(st + "\\n");
 			}
 		} catch (IOException e1) {
-//			lblSaveDeleteOutput.setText("Path or File not valid");
+			System.out.println(e1.getMessage());
 		}
 		// write last record
 		GenerateCSV.writeFile(metadata);
@@ -63,24 +63,11 @@ public class Preporcessing {
 		String v2 = coordinateList.get(Integer.parseInt(arr1[0]));
 		String v3 = coordinateList.get(Integer.parseInt(arr2[0]));
 		
-		if(isValidTrangle(v1, v2, v3)){
-			//make a triangle 
-			String v4 = v1;//v1.substring(0, v1.length()-2);
-			String triangle = "((" + v1 + ", " + v2 + ", "+v3  + ", "+v4 + ")),";			
-			GenerateCSV.writeLine( triangle);
-		}
-		else{
-			//write incorrect coords to error file
-			String v4 = v1.substring(0, v1.length()-2);
-			String invalidTriangle = "((" + v1 + " " + v2 + " "+v3  + " "+v4 + ")),";
-			GenerateCSV.logError( " Invalid triangle: "+invalidTriangle);
-		}
-	}
-
-	private boolean isValidTrangle(String v1, String v2, String v3) {
-		if(v1.equals(v2)|| v2.equals(v3)|| v3.equals(v1))
-		return false;
-		else return true;
+		//make a triangle 
+		String v4 = v1;//v1.substring(0, v1.length()-2);
+		String triangle = "((" + v1 + ", " + v2 + ", "+v3  + ", "+v4 + ")),";			
+		GenerateCSV.writeLine( triangle);
+		
 	}
 
 	void storeCoordinates(String st) {
