@@ -24,7 +24,7 @@ public class Preporcessing {
 		StringBuffer metadata = new StringBuffer();
 		try {
 			while ((st = br.readLine()) != null) {
-				if (st.length() != 0 && st.charAt(0) == 'v') {
+				if (st.length() != 0 && st.charAt(0) == 'v' && st.charAt(1)!='n') {
 					obj.storeCoordinates(st);
 				} else if (st.length() != 0 && st.charAt(0) == 'f') {
 					obj.mapVertexToCoord(st);
