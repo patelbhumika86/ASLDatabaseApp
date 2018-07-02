@@ -30,16 +30,21 @@ public class SpatialQuery {
 		}
 	}
 
-	public void findIntersectingObjs(PGbox3d inputbox) throws ClassNotFoundException {
+	public long findIntersectingObjs(PGbox3d inputbox) throws ClassNotFoundException {
 		deleteOldFile();
 		String SQL = "SELECT id-1 id, metadata FROM tintable WHERE geom &&& ?";
-		try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+		long startTime = System.nanoTime();
+		long endTime=0;
+//		Connection conn;
+		try ( Connection conn= connect(); PreparedStatement pstmt = conn.prepareStatement(SQL)) {
 			pstmt.setObject(1, inputbox);
 			ResultSet rs = pstmt.executeQuery();
+			endTime = (System.nanoTime() - startTime) / 1000000;
 			writeIntersectingObjects(rs);
 		} catch (SQLException ex) {
 			System.out.println(ex.getMessage());
 		}
+		return endTime;
 	}
 
 	private void writeIntersectingObjects(ResultSet rs) throws SQLException {
@@ -50,7 +55,6 @@ public class SpatialQuery {
 			
 			while (rs.next()) {
 				out.println(rs.getString("metadata"));
-				 System.out.println(rs.getString("id"));
 			}
 
 		} catch (IOException e) {

@@ -13,6 +13,7 @@ import java.awt.Font;
 
 import org.postgis.PGbox3d;
 import org.postgis.Point;
+import java.awt.Color;
 
 public class UserInterface implements ActionListener {
 	long noOfObjsInserted = 0;
@@ -22,9 +23,11 @@ public class UserInterface implements ActionListener {
 	private JLabel lblQueryLLB;
 	private JLabel lblQueryURT;
 	private JLabel lblSaveDeleteOutput;
-	private JLabel lblQueryOutput;
-	private JLabel lblQueryTime;
 	private JLabel lblSaveDeleteTime;
+	private JLabel lblQueryOutput;
+	private JLabel lblQueryTotalTime;
+	private JLabel lblQueryFetchTime;
+	private JLabel lblCompareOP;
 
 	private JButton btnSaveObjects;
 	private JButton btnDeleteObjects;
@@ -40,9 +43,10 @@ public class UserInterface implements ActionListener {
 	private JTextField textfieldURTX;
 	private JTextField textfieldURTY;
 	private JTextField textfieldURTZ;
+	
 
 	UserInterface() {
-		JFrame f = new JFrame("Database Interface");
+		JFrame f = new JFrame("TIN Database Interface");
 		
 		btnSaveObjects = new JButton("Save Objects");
 		btnSaveObjects.setBounds(208, 144, 140, 40);
@@ -52,10 +56,11 @@ public class UserInterface implements ActionListener {
 		lblFilePath.setBounds(36, 102, 100, 30);
 		
 		lblSaveDeleteOutput = new JLabel();
+		lblSaveDeleteOutput.setForeground(Color.BLUE);
 		lblSaveDeleteOutput.setBounds(50, 183, 450, 30);
 		
 		textfieldFilePath = new JTextField();
-		textfieldFilePath.setText("/Users/bhumi/Documents/Capstone/inputFiles/MyMeshes_1232.txt");
+		textfieldFilePath.setText("/Users/bhumi/Documents/Capstone/inputFiles/MyMeshes0352.txt");
 		textfieldFilePath.setBounds(161, 102, 508, 30);
 
 		// for query
@@ -89,7 +94,7 @@ public class UserInterface implements ActionListener {
 		f.getContentPane().add(btnFindIntersectingObjects);
 		f.getContentPane().add(lblQueryOutput);
 
-		f.setSize(787, 595);
+		f.setSize(787, 641);
 		f.getContentPane().setLayout(null);
 
 		JSeparator separator = new JSeparator();
@@ -147,17 +152,27 @@ public class UserInterface implements ActionListener {
 		btnDeleteObjects.setBounds(426, 144, 140, 40);
 		f.getContentPane().add(btnDeleteObjects);
 
-		lblQueryTime = new JLabel();
-		lblQueryTime.setBounds(50, 523, 673, 32);
-		f.getContentPane().add(lblQueryTime);
+		lblQueryTotalTime = new JLabel();
+		lblQueryTotalTime.setBounds(50, 567, 673, 32);
+		f.getContentPane().add(lblQueryTotalTime);
 		btnTutorial.setFont(new Font("Lucida Grande", Font.BOLD, 13));
 		btnTutorial.setBounds(664, 6, 117, 29);
 		f.getContentPane().add(btnTutorial);
 
 		lblSaveDeleteTime = new JLabel();
-		lblSaveDeleteTime.setBounds(50, 211, 450, 30);
+		lblSaveDeleteTime.setForeground(Color.BLUE);
+		lblSaveDeleteTime.setBounds(50, 213, 450, 30);
 		f.getContentPane().add(lblSaveDeleteTime);
+		
+		lblQueryFetchTime = new JLabel();
+		lblQueryFetchTime.setBounds(50, 523, 673, 32);
+		f.getContentPane().add(lblQueryFetchTime);
+		
+		lblCompareOP = new JLabel("");
+		lblCompareOP.setBounds(278, 464, 503, 23);
+		f.getContentPane().add(lblCompareOP);
 		f.setVisible(true);
+		
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// action listener
@@ -170,15 +185,16 @@ public class UserInterface implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		clearAllLabeles();
 		inputFilePath = textfieldFilePath.getText();
 		if (e.getSource().equals(btnTutorial)) {
-			clearAllLabeles();
+//			clearAllLabeles();
 			String tutorialMessage = "User can perform 3 operations\n"
 					+ "1. Save - Enter the location of input file, and press";
 			JOptionPane.showMessageDialog(null, tutorialMessage, "InfoBox: " + "Tutorial",
 					JOptionPane.INFORMATION_MESSAGE);
 		} else if (e.getSource().equals(btnSaveObjects)) {
-			clearAllLabeles();
+//			clearAllLabeles();
 			if (inputFilePath.isEmpty() || inputFilePath.length() == 0) {
 				lblSaveDeleteOutput.setText("Please enter a file path for the input file of objects to be stored");
 			} else {
@@ -201,7 +217,7 @@ public class UserInterface implements ActionListener {
 			}
 
 		} else if (e.getSource().equals(btnDeleteObjects)) {
-			clearAllLabeles();
+//			clearAllLabeles();
 			if (inputFilePath.isEmpty() || inputFilePath.length() == 0) {
 				lblSaveDeleteOutput.setText("Please enter a file path for the input file of objects to be deleted");
 			} else {
@@ -225,7 +241,7 @@ public class UserInterface implements ActionListener {
 		}
 
 		else if (e.getSource().equals(btnFindIntersectingObjects)) {
-			clearAllLabeles();
+//			clearAllLabeles();
 			SpatialQuery q = new SpatialQuery();
 			PGbox3d inputBoundingBox = null;
 			try {
@@ -241,24 +257,27 @@ public class UserInterface implements ActionListener {
 				inputBoundingBox = new PGbox3d(new Point(x, y, z), new Point(x1, y1, z1));
 
 				long startTime = System.nanoTime();
-				q.findIntersectingObjs(inputBoundingBox);
+				long onlyfetchTime = q.findIntersectingObjs(inputBoundingBox);
 				long endTime = (System.nanoTime() - startTime) / 1000000;
-				lblQueryTime.setText("Time taken = " + endTime + " millisecs");
-				lblQueryOutput.setText("Intersecting objects are stored in file-" + SpatialQuery.queryOutputFile);
+				lblQueryFetchTime.setText("Time taken only for fetching results = " + onlyfetchTime + " millisecs");
+				lblQueryTotalTime.setText("Total Time taken including writing output file = " + endTime + " millisecs");
+				lblQueryOutput.setText("Intersecting objects are stored in file =" + SpatialQuery.queryOutputFile);
 			} catch (NumberFormatException ignore) {
 				lblQueryOutput.setText("Invalid Input - please enter valid values for bounding box");
 			} catch (ClassNotFoundException e1) {
 				lblQueryOutput.setText("Error finding the intersection");
 			}
-
+			
 		}
 	}
 
 	public void clearAllLabeles() {
 		lblSaveDeleteOutput.setText("");
 		lblQueryOutput.setText("");
-		lblQueryTime.setText("");
+		lblQueryFetchTime.setText("");
+		lblQueryTotalTime.setText("");
 		lblSaveDeleteTime.setText("");
+		lblCompareOP.setText("");
 	}
 
 	public static void main(String[] args) {

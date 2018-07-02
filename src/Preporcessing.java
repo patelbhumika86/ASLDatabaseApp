@@ -18,7 +18,7 @@ public class Preporcessing {
 		} catch (FileNotFoundException e1) {
 			System.out.println(e1.getMessage());
 		}
-		
+
 		GenerateCSV.deleteOldFile();
 		String st = new String();
 		StringBuffer metadata = new StringBuffer();
@@ -40,18 +40,19 @@ public class Preporcessing {
 		}
 		// write last record
 		GenerateCSV.writeFile(metadata);
-		if(addTerminationChar){
+		if (addTerminationChar) {
 			GenerateCSV.addFileTermination("\\.");
 		}
-		
+
 		br.close();
 		return;
 	}
+
 	void mapVertexToCoord(String st) {
 
 		String s = st.substring(2);// ignore f
 		String[] verticesArray = s.split(" ");
-		
+
 		String[] arr0 = verticesArray[0].split("//");// take the first and
 		// ignore 2nd
 		String[] arr1 = verticesArray[1].split("//");// take the first and
@@ -62,17 +63,16 @@ public class Preporcessing {
 		String v1 = coordinateList.get(Integer.parseInt(arr0[0]));
 		String v2 = coordinateList.get(Integer.parseInt(arr1[0]));
 		String v3 = coordinateList.get(Integer.parseInt(arr2[0]));
-		
-		//make a triangle 
-		String v4 = v1;//v1.substring(0, v1.length()-2);
-		String triangle = "((" + v1 + ", " + v2 + ", "+v3  + ", "+v4 + ")),";			
-		GenerateCSV.writeLine( triangle);
-		
+
+		// make a triangle
+		String v4 = v1;// v1.substring(0, v1.length()-2);
+		String triangle = "((" + v1 + ", " + v2 + ", " + v3 + ", " + v4 + ")),";
+		GenerateCSV.writeLine(triangle);
+
 	}
 
 	void storeCoordinates(String st) {
-		String s = st.substring(2);// starting from 2nd index store entire
-		// coordinates
+		String s = st.substring(2);// starting from 2nd index store entire coordinates 
 		String s1 = s.trim();
 		coordinateList.add(s1);
 	}
