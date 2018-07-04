@@ -47,7 +47,8 @@ public class SpatialQuery {
 		return endTime;
 	}
 
-	private void writeIntersectingObjects(ResultSet rs) throws SQLException {
+	private int writeIntersectingObjects(ResultSet rs) throws SQLException {
+		int noOfObjectsReturned = 0;
 
 		try (FileWriter fw = new FileWriter(queryOutputFile, true);
 				BufferedWriter bw = new BufferedWriter(fw);
@@ -55,10 +56,12 @@ public class SpatialQuery {
 			
 			while (rs.next()) {
 				out.println(rs.getString("metadata"));
+				noOfObjectsReturned++;
 			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return noOfObjectsReturned;
 	}
 }

@@ -60,7 +60,7 @@ public class UserInterface implements ActionListener {
 		lblSaveDeleteOutput.setBounds(50, 183, 450, 30);
 		
 		textfieldFilePath = new JTextField();
-		textfieldFilePath.setText("/Users/bhumi/Documents/Capstone/inputFiles/MyMeshes0352.txt");
+		textfieldFilePath.setText("/Users/bhumi/Documents/Capstone/inputFiles/BB1.txt");
 		textfieldFilePath.setBounds(161, 102, 508, 30);
 
 		// for query
@@ -77,6 +77,7 @@ public class UserInterface implements ActionListener {
 
 		// empty label which will show event after button clicked
 		lblQueryOutput = new JLabel();
+		lblQueryOutput.setForeground(Color.BLUE);
 		lblQueryOutput.setBounds(50, 478, 673, 32);
 		
 		textfieldLLBX = new JTextField();
@@ -153,6 +154,7 @@ public class UserInterface implements ActionListener {
 		f.getContentPane().add(btnDeleteObjects);
 
 		lblQueryTotalTime = new JLabel();
+		lblQueryTotalTime.setForeground(Color.BLUE);
 		lblQueryTotalTime.setBounds(50, 567, 673, 32);
 		f.getContentPane().add(lblQueryTotalTime);
 		btnTutorial.setFont(new Font("Lucida Grande", Font.BOLD, 13));
@@ -165,6 +167,7 @@ public class UserInterface implements ActionListener {
 		f.getContentPane().add(lblSaveDeleteTime);
 		
 		lblQueryFetchTime = new JLabel();
+		lblQueryFetchTime.setForeground(Color.BLUE);
 		lblQueryFetchTime.setBounds(50, 523, 673, 32);
 		f.getContentPane().add(lblQueryFetchTime);
 		
