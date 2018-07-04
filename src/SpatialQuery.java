@@ -10,6 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.postgis.PGbox3d;
 
+class ReturnResult{
+	 int noOfRows;
+	 long fetchTime;
+}
 public class SpatialQuery {
 	public static String queryOutputFile = "/Users/bhumi/Documents/Capstone/inputFiles/" + "outputObjects.txt";
 	String dbURL = "jdbc:postgresql://localhost:5432/asl";
@@ -17,12 +21,17 @@ public class SpatialQuery {
 	String password = "password";
 
 	public Connection connect() throws SQLException, ClassNotFoundException {
+		long startTime = System.nanoTime();	
 		Connection con = DriverManager.getConnection(dbURL, user, password);
+		System.out.println( (System.nanoTime() - startTime) / 1000000);
 		((org.postgresql.PGConnection) con).addDataType("geometry", Class.forName("org.postgis.PGgeometry"));
 		((org.postgresql.PGConnection) con).addDataType("box3d", Class.forName("org.postgis.PGbox3d"));
+		
 		return con;
 	}
 
+	
+	
 	public static void deleteOldFile() {
 		File file = new File(queryOutputFile);
 		if (file.exists()) {
@@ -30,34 +39,49 @@ public class SpatialQuery {
 		}
 	}
 
-	public long findIntersectingObjs(PGbox3d inputbox) throws ClassNotFoundException {
+	public ReturnResult findIntersectingObjs(PGbox3d inputbox) throws ClassNotFoundException, SQLException {
 		deleteOldFile();
+		ReturnResult returnObj = new ReturnResult();
 		String SQL = "SELECT id-1 id, metadata FROM tintable WHERE geom &&& ?";
-		long startTime = System.nanoTime();
-		long endTime=0;
-//		Connection conn;
-		try ( Connection conn= connect(); PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+		Connection conn = null;
+		ResultSet rs = null;
+		try{
+			conn = connect();
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setObject(1, inputbox);
-			ResultSet rs = pstmt.executeQuery();
-			endTime = (System.nanoTime() - startTime) / 1000000;
-			writeIntersectingObjects(rs);
+			long startTime = System.nanoTime();	
+			rs = pstmt.executeQuery();
+			returnObj.fetchTime = (System.nanoTime() - startTime) / 1000000;		
+			returnObj.noOfRows= writeIntersectingObjects(rs);
 		} catch (SQLException ex) {
 			System.out.println(ex.getMessage());
 		}
-		return endTime;
+		
+//		try ( Connection conn= connect(); PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+//			pstmt.setObject(1, inputbox);
+//			long startTime = System.nanoTime();	
+//			ResultSet rs = pstmt.executeQuery();
+//			returnObj.fetchTime = (System.nanoTime() - startTime) / 1000000;		
+//			returnObj.noOfRows= writeIntersectingObjects(rs);
+//		} catch (SQLException ex) {
+//			System.out.println(ex.getMessage());
+//		}
+		rs.close();
+		conn.close();
+		return returnObj;
 	}
-
-	private int writeIntersectingObjects(ResultSet rs) throws SQLException {
+	
+	int writeIntersectingObjects(ResultSet rs) throws SQLException {
 		int noOfObjectsReturned = 0;
 
 		try (FileWriter fw = new FileWriter(queryOutputFile, true);
 				BufferedWriter bw = new BufferedWriter(fw);
-				PrintWriter out = new PrintWriter(bw)) {
-			
+				PrintWriter out = new PrintWriter(bw)) {			
 			while (rs.next()) {
 				out.println(rs.getString("metadata"));
 				noOfObjectsReturned++;
 			}
+			
 
 		} catch (IOException e) {
 			e.printStackTrace();
