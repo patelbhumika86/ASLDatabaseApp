@@ -25,13 +25,10 @@ public class SpatialQuery {
 		Connection con = DriverManager.getConnection(dbURL, user, password);
 		System.out.println( (System.nanoTime() - startTime) / 1000000);
 		((org.postgresql.PGConnection) con).addDataType("geometry", Class.forName("org.postgis.PGgeometry"));
-		((org.postgresql.PGConnection) con).addDataType("box3d", Class.forName("org.postgis.PGbox3d"));
-		
+		((org.postgresql.PGConnection) con).addDataType("box3d", Class.forName("org.postgis.PGbox3d"));		
 		return con;
 	}
 
-	
-	
 	public static void deleteOldFile() {
 		File file = new File(queryOutputFile);
 		if (file.exists()) {
@@ -46,10 +43,10 @@ public class SpatialQuery {
 		Connection conn = null;
 		ResultSet rs = null;
 		try{
+			long startTime = System.nanoTime();	
 			conn = connect();
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setObject(1, inputbox);
-			long startTime = System.nanoTime();	
 			rs = pstmt.executeQuery();
 			returnObj.fetchTime = (System.nanoTime() - startTime) / 1000000;		
 			returnObj.noOfRows= writeIntersectingObjects(rs);
@@ -57,15 +54,6 @@ public class SpatialQuery {
 			System.out.println(ex.getMessage());
 		}
 		
-//		try ( Connection conn= connect(); PreparedStatement pstmt = conn.prepareStatement(SQL)) {
-//			pstmt.setObject(1, inputbox);
-//			long startTime = System.nanoTime();	
-//			ResultSet rs = pstmt.executeQuery();
-//			returnObj.fetchTime = (System.nanoTime() - startTime) / 1000000;		
-//			returnObj.noOfRows= writeIntersectingObjects(rs);
-//		} catch (SQLException ex) {
-//			System.out.println(ex.getMessage());
-//		}
 		rs.close();
 		conn.close();
 		return returnObj;

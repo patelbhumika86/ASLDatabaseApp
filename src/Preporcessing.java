@@ -36,6 +36,7 @@ public class Preporcessing {
 				metadata.append(st + "\\n");
 			}
 		} catch (IOException e1) {
+			
 			System.out.println(e1.getMessage());
 		}
 		// write last record

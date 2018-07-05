@@ -60,7 +60,7 @@ public class UserInterface implements ActionListener {
 		lblSaveDeleteOutput.setBounds(50, 183, 450, 30);
 
 		textfieldFilePath = new JTextField();
-		textfieldFilePath.setText("/Users/bhumi/Documents/Capstone/inputFiles/BB1.txt");
+		textfieldFilePath.setText("/Users/bhumi/Documents/Capstone/inputFiles/Meshes1.txt");
 		textfieldFilePath.setBounds(161, 102, 508, 30);
 
 		// for query
